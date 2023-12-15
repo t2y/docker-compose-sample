@@ -1,0 +1,30 @@
+version: '3.9'
+
+x-logging: &default-logging
+  options:
+    max-size: "16m"
+    max-file: "5"
+  driver: json-file
+
+services:
+  myimage:
+    container_name: mycontainer
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    logging: *default-logging
+    ports:
+      - 8080:8080
+
+  nginx:
+    container_name: mynginx
+    image: docker.io/library/nginx:stable
+    logging: *default-logging
+    ports:
+      - 8081:80
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 128M
