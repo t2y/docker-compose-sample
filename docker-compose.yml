@@ -9,6 +9,7 @@ x-logging: &default-logging
 services:
   myimage:
     container_name: mycontainer
+    hostname: yourcontainer
     build:
       context: ./
       dockerfile: Dockerfile
@@ -23,6 +24,7 @@ services:
     ports:
       - 8081:80
     restart: unless-stopped
+    hostname: yournginx
     deploy:
       resources:
         limits:
